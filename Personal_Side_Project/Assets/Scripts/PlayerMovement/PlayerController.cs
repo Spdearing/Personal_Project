@@ -13,25 +13,30 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private int playerPoints;
 
 
-    [Header("Bools")]
-    [SerializeField] private bool withinRange;
 
+    [SerializeField] private PlayerCollisions collisions;
     [SerializeField] private UIManager uiManager;
 
 
     private void Start()
     {
-        rb = GetComponent<Rigidbody>();
-        walkSpeed = 5.0f;
-        sprintSpeed = 10.0f;
-        moveSpeed = walkSpeed;
-        uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
+        SetUp();
     }
 
     private void Update()
     {
         HandleMovement();
         BasicMachineInteraction();
+    }
+
+    void SetUp()
+    {
+        rb = GetComponent<Rigidbody>();
+        walkSpeed = 5.0f;
+        sprintSpeed = 10.0f;
+        moveSpeed = walkSpeed;
+        uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
+        collisions = GetComponent<PlayerCollisions>();
     }
 
     private void HandleMovement()
@@ -51,27 +56,10 @@ public class PlayerController : MonoBehaviour
         rb.MovePosition(rb.position + move);
     }
 
-    public void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.tag == "MoneyMachine")
-        {
-            Debug.Log("Can press E");
-            withinRange = true;
-        }
-    }
-
-    public void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.tag == "MoneyMachine")
-        {
-            withinRange = false;
-        }
-    }
-
 
     void BasicMachineInteraction()
     {
-        if (Input.GetKeyDown(KeyCode.E) && withinRange)
+        if (Input.GetKeyDown(KeyCode.E) && collisions.ReturnWithinRange())
         {
             playerPoints += 1;
             uiManager.UpdatePlayerPoints(playerPoints);

@@ -9,6 +9,11 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private int playerPoints;
 
+    [SerializeField] private bool TowerOneUnlocked;
+    [SerializeField] private bool TowerTwoUnlocked;
+    [SerializeField] private bool TowerThreeUnlocked;
+    [SerializeField] private bool TowerFourUnlocked;
+
     private void Awake()
     {
         playerPoints = 0;
@@ -31,5 +36,10 @@ public class GameManager : MonoBehaviour
     public int ReturnPlayerPoints()
     {
         return playerPoints;
+    }
+
+    public bool ReturnTowerOneUnlocked()
+    {
+        return TowerOneUnlocked; 
     }
 }
