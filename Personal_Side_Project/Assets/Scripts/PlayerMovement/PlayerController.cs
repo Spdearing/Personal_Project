@@ -10,17 +10,25 @@ public class PlayerController : MonoBehaviour
     [Header("RigidBody")]
     private Rigidbody rb;
 
+    [SerializeField] private int playerPoints;
+
+
+    [Header("Bools")]
+    [SerializeField] private bool withinRange;
+
+
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
         walkSpeed = 5.0f;
         sprintSpeed = 10.0f;
-        moveSpeed = walkSpeed; // Default movement speed
+        moveSpeed = walkSpeed;
     }
 
     private void Update()
     {
         HandleMovement();
+        BasicMachineInteraction();
     }
 
     private void HandleMovement()
@@ -38,5 +46,32 @@ public class PlayerController : MonoBehaviour
         // Move the player using Rigidbody
         Vector3 move = movement * moveSpeed * Time.deltaTime;
         rb.MovePosition(rb.position + move);
+    }
+
+    public void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "MoneyMachine")
+        {
+            Debug.Log("Can press E");
+            withinRange = true;
+        }
+    }
+
+    public void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag == "MoneyMachine")
+        {
+            withinRange = false;
+        }
+    }
+
+
+    void BasicMachineInteraction()
+    {
+        if (Input.GetKeyDown(KeyCode.E) && withinRange)
+        {
+            playerPoints += 1;
+            Debug.Log(playerPoints);
+        }
     }
 }

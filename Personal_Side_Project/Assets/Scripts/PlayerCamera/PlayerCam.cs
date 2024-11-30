@@ -34,4 +34,6 @@ public class CameraFollow : MonoBehaviour
         // Optionally, align the camera to look straight down
         transform.rotation = Quaternion.Euler(90f, 0f, 0f);
     }
+
+
 }
