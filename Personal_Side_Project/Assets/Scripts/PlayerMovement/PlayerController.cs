@@ -16,6 +16,8 @@ public class PlayerController : MonoBehaviour
     [Header("Bools")]
     [SerializeField] private bool withinRange;
 
+    [SerializeField] private UIManager uiManager;
+
 
     private void Start()
     {
@@ -23,6 +25,7 @@ public class PlayerController : MonoBehaviour
         walkSpeed = 5.0f;
         sprintSpeed = 10.0f;
         moveSpeed = walkSpeed;
+        uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
     }
 
     private void Update()
@@ -71,7 +74,12 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E) && withinRange)
         {
             playerPoints += 1;
-            Debug.Log(playerPoints);
+            uiManager.UpdatePlayerPoints(playerPoints);
         }
+    }
+
+    public int ReturnPlayerPoints()
+    {
+        return this.playerPoints;
     }
 }
