@@ -38,7 +38,7 @@ public class GameManager : MonoBehaviour
         return playerPoints;
     }
 
-    public bool ReturnTowerOneUnlocked()
+    public bool ReturnFirstTowerUnlocked()
     {
         return TowerOneUnlocked; 
     }
